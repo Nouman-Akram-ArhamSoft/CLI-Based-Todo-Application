@@ -1,5 +1,45 @@
-import time
+# pylint: disable=invalid-name
+
 import os
+import time
+
+def open_file(file: str):
+    '''
+    Create a File if not exit and return the read mode file.
+
+            Parameters:
+                    file (str): File Name
+            Returns:
+                    FilePath (str): Returns the path of file
+    '''
+    choice = "y"
+    while not os.path.isfile(file):
+        print("File Not Exits")
+        choice = input("Do you want to create new file (Y/n): ").casefold()
+        if choice == 'y':
+            write_open_file = open(file, 'w')
+            write_open_file.close()
+            print("File Successfully Created")
+        elif choice == 'n':
+            print("No File is Created Please Enter Data in ToDo List to create file")
+            break
+        else:
+            print("Please Enter the valid input : ")
+    if choice == 'y' and os.path.isfile(file):
+        read_open_file = open(file, 'r')
+        return read_open_file
+
+
+def close_file(file: str)-> None:
+    '''
+    Close the open file.
+
+            Parameters:
+                    file (str): File Name
+            Returns:
+                    None
+    '''
+    file.close()
 
 
 def get_valid_integer(massage: str) -> int:
@@ -50,8 +90,9 @@ def add_item(task: str) -> None:
         print("\n" + ("*"*40))
         print(f"Successfully added '{task}' in task list")
         print("*"*40)
-        
+
     todo.close()
+
 
 def done_task():
     '''
@@ -103,21 +144,25 @@ def view_task():
             Returns:
                     Massege : Returns the massage for all the items in ToDO File
     '''
-    with open('todo.txt', 'r') as todo:
-        contents = todo.readlines()
 
-        if contents:
+    todo = open_file('todo.txt')
+    contents = []
+    if todo is not None:
+        contents = todo.readline()
+        close_file(todo)
 
-            for index, item in enumerate(contents):
-                print("-"*40)
-                print(f"Item No {index+1} to do ==> {item.rstrip()}")
-                print("-"*40)
-            time.sleep(1)
+    if contents:
 
-        else:
-            print("\n" + ("*"*30))
-            print("No Status to Do")
-            print("*"*30)
+        for index, item in enumerate(contents):
+            print("-"*40)
+            print(f"Item No {index+1} to do ==> {item.rstrip()}")
+            print("-"*40)
+        time.sleep(1)
+
+    else:
+        print("\n" + ("*"*30))
+        print("No Status to Do")
+        print("*"*30)
 
     return contents
 
