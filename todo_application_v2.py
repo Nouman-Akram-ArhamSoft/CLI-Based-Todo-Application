@@ -21,9 +21,6 @@ class ToDo:
     done_item():
         remove the completed item from file
 
-    remove_duplicate_files():
-        Remove all duplicate files in directory
-
     view_item():
         View the all items in files
 
