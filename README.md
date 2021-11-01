@@ -3,7 +3,6 @@ Manage your Daily task and maintain your record in specific file
 
 
 ## Todo-Application Basic Task
-<hr>
 
 - Main Todo Class
 
